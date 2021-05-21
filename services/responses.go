@@ -1,5 +1,7 @@
 package services
 
+import "encoding/xml"
+
 type RestException struct {
 	Status  string `xml:"Status"`
 	Message string `xml:"Message"`
@@ -9,10 +11,6 @@ type RestException struct {
 type Response struct {
 	IncomingPhoneNumer IncomingPhoneNumer `xml:"IncomingPhoneNumber"`
 	RestException      RestException      `xml:"RestException"`
-	Play               string             `xml:"Play"`
-	Dial               Dial               `xml:"Dial"`
-	Say                Say                `xml:"Say"`
-	Gather             Gather             `xml:"Gather"`
 }
 
 type IncomingPhoneNumer struct {
@@ -58,34 +56,32 @@ type Capabilities struct {
 type NumberAPIResponse struct {
 	FirstPageUri         string               `json:"first_page_uri"`
 	End                  string               `json:"end"`
-	Total                string               `json:"total"`
+	Total                int                  `json:"total"`
 	PreivousPageUri      string               `json:"previous_page_uri"`
-	NumPages             string               `json:"num_pages"`
+	NumPages             int                  `json:"num_pages"`
 	IncomingPhoneNumbers []IncomingPhoneNumer `json:"incoming_phone_numbers"`
 	Uri                  string               `json:"uri"`
-	PageSize             string               `json:"page_size"`
+	PageSize             int                  `json:"page_size"`
 	Start                string               `json:"start"`
 	NextPageUri          string               `json:"next_page_uri"`
 	LastPageUri          string               `json:"last_page_uri"`
 	Page                 string               `json:"page"`
 }
 
-type InboundXMLResponse struct {
-	Response Response `xml:"Response"`
-}
-
 type Say struct {
+	Value    string `xml:",chardata"`
 	Voice    string `xml:"voice,attr"`
 	Language string `xml:"language,attr"`
 	Loop     int    `xml:"loop,attr"`
 }
 
 type Dial struct {
+	Value  string `xml:",chardata"`
 	Method string `xml:"method,attr"`
 }
 
 type Pause struct {
-	Length string `xml:"length,attr"`
+	Length int `xml:"length,attr"`
 }
 
 type Redirect struct {
@@ -93,8 +89,41 @@ type Redirect struct {
 }
 
 type Gather struct {
-	Play     string `xml:"Play"`
-	Pause    Pause  `xml:"Pause"`
-	Redirect string `xml:"Redirect"`
-	Say      Say    `xml:"Redirect"`
+	Input       string `xml:"input,attr"`
+	Hints       string `xml:"hints,attr"`
+	Language    string `xml:"language,attr"`
+	Action      string `xml:"action,attr"`
+	Method      string `xml:"method,attr"`
+	Timeout     int    `xml:"timeout,attr"`
+	FinishOnKey string `finishOnKey:"input,attr"`
+	NumDigits   int    `xml:"numDigits,attr"`
+	Play        string `xml:"Play"`
+	Pause       Pause  `xml:"Pause"`
+	Redirect    string `xml:"Redirect"`
+	Say         Say    `xml:"Say"`
+}
+
+type ResponseGather struct {
+	XMLName xml.Name `xml:"Response"`
+	Gather  Gather   `xml:"Gather"`
+}
+type ResponsePlay struct {
+	XMLName xml.Name `xml:"Response"`
+	Play    string   `xml:"Play"`
+}
+type ResponseDial struct {
+	XMLName xml.Name `xml:"Response"`
+	Dial    Dial     `xml:"Dial"`
+}
+type ResponsePause struct {
+	XMLName xml.Name `xml:"Response"`
+	Pause   Pause    `xml:"Pause"`
+}
+type ResponseRedirect struct {
+	XMLName  xml.Name `xml:"Response"`
+	Redirect Redirect `xml:"Redirect"`
+}
+type ResponseSay struct {
+	XMLName xml.Name `xml:"Response"`
+	Say     Say      `xml:"Say"`
 }
