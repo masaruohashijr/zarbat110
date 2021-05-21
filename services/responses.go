@@ -9,6 +9,9 @@ type RestException struct {
 type Response struct {
 	IncomingPhoneNumer IncomingPhoneNumer `xml:"IncomingPhoneNumber"`
 	RestException      RestException      `xml:"RestException"`
+	Play               string             `xml:"Play"`
+	Dial               Dial               `xml:"Dial"`
+	Say                Say                `xml:"Say"`
 }
 
 type IncomingPhoneNumer struct {
@@ -64,4 +67,18 @@ type NumberAPIResponse struct {
 	NextPageUri          string               `json:"next_page_uri"`
 	LastPageUri          string               `json:"last_page_uri"`
 	Page                 string               `json:"page"`
+}
+
+type InboundXMLResponse struct {
+	Response Response `xml:"Response"`
+}
+
+type Say struct {
+	Voice    string `xml:"voice,attr"`
+	Language string `xml:"language,attr"`
+	Loop     int    `xml:"loop,attr"`
+}
+
+type Dial struct {
+	Method string `xml:"method,attr"`
 }
