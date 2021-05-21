@@ -40,7 +40,7 @@ func main() {
 	http.Handle("/", r)
 	addr := ":5000"
 
-	r.HandleFunc("/play", Play).Methods("POST")
+	r.HandleFunc("/play", PlayFirst).Methods("POST")
 	r.HandleFunc("/say", Say).Methods("POST")
 	r.HandleFunc("/DTMF1", DTMF1).Methods("POST")
 	r.HandleFunc("/DTMF2", DTMF2).Methods("POST")
@@ -53,7 +53,7 @@ func main() {
 	}
 }
 
-func Play(w http.ResponseWriter, r *http.Request) {
+func PlayFirst(w http.ResponseWriter, r *http.Request) {
 	inbound := &s.InboundXMLResponse{
 		&Response{
 			"Play":"https://teresadapraiamidis.com/Mp3/Musicas/Rock_Internacional/U2/Beautiful_Day.mp3"
@@ -69,7 +69,37 @@ func Play(w http.ResponseWriter, r *http.Request) {
 	w.Write(inbound)
 	return
 }
+
+func PlaySecond(w http.ResponseWriter, r *http.Request) {
+	inbound := &s.InboundXMLResponse{
+		&Response{
+			"Play":"https://teresadapraiamidis.com/Mp3/Musicas/Rock_Internacional/Alok/Hear_Me_Now.mp3"
+		}
+	}
+	x, err := xml.MarshalIndent(inbound, "", "  ")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/xml")
+	w.Write(inbound)
+	return
+}
 func Dial(w http.ResponseWriter, r *http.Request) {
+	inbound := &s.InboundXMLResponse{
+		&Response{
+			"Dial":"https://teresadapraiamidis.com/Mp3/Musicas/Rock_Internacional/U2/Beautiful_Day.mp3"
+		}
+	}
+	x, err := xml.MarshalIndent(inbound, "", "  ")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/xml")
+	w.Write(inbound)
 	return
 }
 func Say(w http.ResponseWriter, r *http.Request) {

@@ -12,6 +12,7 @@ type Response struct {
 	Play               string             `xml:"Play"`
 	Dial               Dial               `xml:"Dial"`
 	Say                Say                `xml:"Say"`
+	Gather             Gather             `xml:"Gather"`
 }
 
 type IncomingPhoneNumer struct {
@@ -81,4 +82,19 @@ type Say struct {
 
 type Dial struct {
 	Method string `xml:"method,attr"`
+}
+
+type Pause struct {
+	Length string `xml:"length,attr"`
+}
+
+type Redirect struct {
+	Method string `xml:"method,attr"`
+}
+
+type Gather struct {
+	Play     string `xml:"Play"`
+	Pause    Pause  `xml:"Pause"`
+	Redirect string `xml:"Redirect"`
+	Say      Say    `xml:"Redirect"`
 }
