@@ -48,8 +48,10 @@ func main() {
 }
 
 func PlayFirst(w http.ResponseWriter, r *http.Request) {
-	inbound := &s.ResponsePlay{
-		Play: "https://teresadapraiamidis.com/Mp3/Musicas/Rock_Internacional/Coldplay/Paradise.mp3",
+	inbound := &s.Response{
+		Play: s.Play{
+			Value: "https://teresadapraiamidis.com/Mp3/Musicas/Rock_Internacional/Coldplay/Paradise.mp3",
+		},
 	}
 	iXML, err := xml.MarshalIndent(inbound, "", "  ")
 	if err != nil {
