@@ -189,5 +189,20 @@ func DTMF3(w http.ResponseWriter, r *http.Request) {
 	return
 }
 func SMS(w http.ResponseWriter, r *http.Request) {
+	inbound := &s.ResponseSms{
+		Sms: s.Sms{
+			Value: "Hi, the Sms service is working.",
+			From:  "(647)930-8804",
+			To:    "(647) 695-6429",
+		},
+	}
+	iXML, err := xml.MarshalIndent(inbound, "", "  ")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/xml")
+	w.Write(iXML)
 	return
 }

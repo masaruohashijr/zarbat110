@@ -74,20 +74,20 @@ type Sms struct {
 	Value                string `xml:",chardata"`
 	To                   string `xml:"to"`
 	From                 string `xml:"from"`
-	Action               string `xml:"action"`
-	Method               string `xml:"method"`
-	StatusCallback       string `xml:"statusCallback"`
-	StatusCallbackMethod string `xml:"statusCallbackMethod"`
+	Action               string `xml:"action,omitempty"`
+	Method               string `xml:"method,omitempty"`
+	StatusCallback       string `xml:"statusCallback,omitempty"`
+	StatusCallbackMethod string `xml:"statusCallbackMethod,omitempty"`
 }
 
 type Mms struct {
 	Value          string `xml:",chardata"`
 	To             string `xml:"to"`
 	From           string `xml:"from"`
-	Action         string `xml:"action"`
-	Method         string `xml:"method"`
-	StatusCallback string `xml:"statusCallback"`
-	MediaUrl       string `xml:"mediaUrl"`
+	Action         string `xml:"action,omitempty"`
+	Method         string `xml:"method,omitempty"`
+	StatusCallback string `xml:"statusCallback,omitempty"`
+	MediaUrl       string `xml:"mediaUrl,omitempty"`
 }
 
 type Dial struct {
@@ -202,6 +202,11 @@ type User struct {
 type ResponsePlay struct {
 	XMLName xml.Name `xml:"Response"`
 	Play    Play     `xml:"Play"`
+}
+
+type ResponseSms struct {
+	XMLName xml.Name `xml:"Response"`
+	Sms     Sms      `xml:"Sms"`
 }
 
 type ResponseSay struct {
