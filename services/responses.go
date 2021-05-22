@@ -65,9 +65,9 @@ type NumberAPIResponse struct {
 
 type Say struct {
 	Value    string `xml:",chardata"`
-	Voice    string `xml:"voice,attr"`
-	Language string `xml:"language,attr"`
-	Loop     int    `xml:"loop,attr"`
+	Voice    string `xml:"voice,attr,omitempty"`
+	Language string `xml:"language,attr,omitempty"`
+	Loop     int    `xml:"loop,attr,omitempty"`
 }
 
 type Sms struct {
@@ -122,8 +122,8 @@ type Dial struct {
 
 type Play struct {
 	Value  string `xml:",chardata"`
-	Loop   int    `xml:"loop,attr"`
-	Method int    `xml:"method,attr"`
+	Loop   int    `xml:"loop,attr,omitempty"`
+	Method string `xml:"method,attr,omitempty"`
 }
 
 type Pause struct {
@@ -155,6 +155,18 @@ type GetSpeech struct {
 	Grammar           int    `xml:"grammar,attr"`
 }
 
+type GatherSay struct {
+	Say         Say    `xml:"Say"`
+	Input       string `xml:"input,attr"`
+	Hints       string `xml:"hints,attr"`
+	Language    string `xml:"language,attr"`
+	Action      string `xml:"action,attr"`
+	Method      string `xml:"method,attr"`
+	Timeout     int    `xml:"timeout,attr"`
+	FinishOnKey string `xml:"finishOnKey,attr"`
+	NumDigits   int    `xml:"numDigits,attr"`
+}
+
 type Gather struct {
 	Say               Say    `xml:"Say"`
 	Play              string `xml:"Play"`
@@ -166,7 +178,7 @@ type Gather struct {
 	Action            string `xml:"action,attr"`
 	Method            string `xml:"method,attr"`
 	Timeout           int    `xml:"timeout,attr"`
-	FinishOnKey       string `finishOnKey:"input,attr"`
+	FinishOnKey       string `xml:"finishOnKey,attr"`
 	NumDigits         int    `xml:"numDigits,attr"`
 }
 
@@ -187,21 +199,40 @@ type User struct {
 	Params     string `xml:"params,attr"`
 }
 
+type ResponsePlay struct {
+	XMLName xml.Name `xml:"Response"`
+	Play    Play     `xml:"Play"`
+}
+
+type ResponseSay struct {
+	XMLName xml.Name `xml:"Response"`
+	Say     Say      `xml:"Say"`
+}
+
+type ResponseAnswer struct {
+	XMLName xml.Name `xml:"Response"`
+	Answer  string   `xml:"Answer"`
+}
+
+type ResponseGather struct {
+	XMLName xml.Name  `xml:"Response"`
+	Gather  GatherSay `xml:"Gather"`
+}
+
 type Response struct {
 	XMLName            xml.Name           `xml:"Response"`
-	Say                Say                `xml:"Say"`
-	Play               Play               `xml:"Play"`
-	Answer             string             `xml:"Answer"`
-	PlayLastRecording  string             `xml:"PlayLastRecording"`
-	Gather             Gather             `xml:"Gather"`
-	Dial               Dial               `xml:"Dial"`
-	Hangup             Hangup             `xml:"Hangup"`
-	Redirect           Redirect           `xml:"Redirect"`
-	Ping               Ping               `xml:"Ping"`
-	Reject             Reject             `xml:"Reject"`
-	Pause              Pause              `xml:"Pause"`
-	Sms                Sms                `xml:"Sms"`
-	Mms                Mms                `xml:"Mms"`
-	IncomingPhoneNumer IncomingPhoneNumer `xml:"IncomingPhoneNumber"`
-	RestException      RestException      `xml:"RestException"`
+	Say                Say                `xml:"Say,omitempty"`
+	Answer             string             `xml:"Answer,omitempty"`
+	PlayLastRecording  string             `xml:"PlayLastRecording,omitempty"`
+	Gather             Gather             `xml:"Gather,omitempty"`
+	Dial               Dial               `xml:"Dial,omitempty"`
+	Hangup             Hangup             `xml:"Hangup,omitempty"`
+	Redirect           Redirect           `xml:"Redirect,omitempty"`
+	Ping               Ping               `xml:"Ping,omitempty"`
+	Reject             Reject             `xml:"Reject,omitempty"`
+	Pause              Pause              `xml:"Pause,omitempty"`
+	Sms                Sms                `xml:"Sms,omitempty"`
+	Mms                Mms                `xml:"Mms,omitempty"`
+	IncomingPhoneNumer IncomingPhoneNumer `xml:"IncomingPhoneNumber,omitempty"`
+	RestException      RestException      `xml:"RestException,omitempty"`
 }
