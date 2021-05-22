@@ -87,7 +87,7 @@ type Mms struct {
 	Action         string `xml:"action"`
 	Method         string `xml:"method"`
 	StatusCallback string `xml:"statusCallback"`
-	mediaUrl       string `xml:"mediaUrl"`
+	MediaUrl       string `xml:"mediaUrl"`
 }
 
 type Dial struct {
