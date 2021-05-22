@@ -8,11 +8,6 @@ type RestException struct {
 	Code    string `xml:"Code"`
 }
 
-type Response struct {
-	IncomingPhoneNumer IncomingPhoneNumer `xml:"IncomingPhoneNumber"`
-	RestException      RestException      `xml:"RestException"`
-}
-
 type IncomingPhoneNumer struct {
 	MmsUrl               string       `xml:"MmsUrl" json:"mms_url"`
 	DateUpdated          string       `xml:"DateUpdated" json:"date_updated"`
@@ -75,9 +70,60 @@ type Say struct {
 	Loop     int    `xml:"loop,attr"`
 }
 
+type Sms struct {
+	Value                string `xml:",chardata"`
+	To                   string `xml:"to"`
+	From                 string `xml:"from"`
+	Action               string `xml:"action"`
+	Method               string `xml:"method"`
+	StatusCallback       string `xml:"statusCallback"`
+	StatusCallbackMethod string `xml:"statusCallbackMethod"`
+}
+
+type Mms struct {
+	Value          string `xml:",chardata"`
+	To             string `xml:"to"`
+	From           string `xml:"from"`
+	Action         string `xml:"action"`
+	Method         string `xml:"method"`
+	StatusCallback string `xml:"statusCallback"`
+	mediaUrl       string `xml:"mediaUrl"`
+}
+
 type Dial struct {
+	Value             string `xml:",chardata"`
+	Action            string `xml:"action"`
+	Method            string `xml:"method"`
+	Timeout           int    `xml:"timeout"`
+	HangupOnStar      string `xml:"hangupOnStar"`
+	TimeLimit         int    `xml:"timeLimit"`
+	CallerId          string `xml:"callerId"`
+	HideCallerId      string `xml:"hideCallerId"`
+	CallerName        string `xml:"callerName"`
+	DialMusic         string `xml:"dialMusic"`
+	CallbackUrl       string `xml:"callbackUrl"`
+	CallbackMethod    string `xml:"callbackMethod"`
+	ConfirmSound      string `xml:"confirmSound"`
+	DigitsMatch       string `xml:"digitsMatch"`
+	StraightToVm      string `xml:"straightToVm"`
+	HeartbeatUrl      string `xml:"heartbeatUrl"`
+	HeartbeatMethod   string `xml:"heartbeatMethod"`
+	ForwardedFrom     string `xml:"forwardedFrom"`
+	Record            string `xml:"record"`
+	RecordDirection   string `xml:"recordDirection"`
+	RecordCallbackUrl string `xml:"recordCallbackUrl"`
+	RecordLifetime    string `xml:"recordLifetime"`
+	RecordFormat      string `xml:"recordFormat"`
+	IfMachine         string `xml:"ifMachine"`
+	IfMachineUrl      string `xml:"ifMachineUrl"`
+	IfMachineMethod   string `xml:"ifMachineMethod"`
+	OutboundAction    string `xml:"outboundAction"`
+}
+
+type Play struct {
 	Value  string `xml:",chardata"`
-	Method string `xml:"method,attr"`
+	Loop   int    `xml:"loop,attr"`
+	Method int    `xml:"method,attr"`
 }
 
 type Pause struct {
@@ -88,42 +134,74 @@ type Redirect struct {
 	Method string `xml:"method,attr"`
 }
 
-type Gather struct {
-	Input       string `xml:"input,attr"`
-	Hints       string `xml:"hints,attr"`
-	Language    string `xml:"language,attr"`
-	Action      string `xml:"action,attr"`
-	Method      string `xml:"method,attr"`
-	Timeout     int    `xml:"timeout,attr"`
-	FinishOnKey string `finishOnKey:"input,attr"`
-	NumDigits   int    `xml:"numDigits,attr"`
-	Play        string `xml:"Play"`
-	Pause       Pause  `xml:"Pause"`
-	Redirect    string `xml:"Redirect"`
-	Say         Say    `xml:"Say"`
+type Ping struct {
+	Value  string `xml:",chardata"`
+	Method string `xml:"method,attr"`
 }
 
-type ResponseGather struct {
-	XMLName xml.Name `xml:"Response"`
-	Gather  Gather   `xml:"Gather"`
+type Reject struct {
+	Reason string `xml:"reason,attr"`
 }
-type ResponsePlay struct {
-	XMLName xml.Name `xml:"Response"`
-	Play    string   `xml:"Play"`
+
+type GetSpeech struct {
+	Say               Say    `xml:"Say"`
+	Play              string `xml:"Play"`
+	PlayLastRecording string `xml:"PlayLastRecording"`
+	Pause             Pause  `xml:"Pause"`
+	Action            string `xml:"action,attr"`
+	Method            string `xml:"method,attr"`
+	Timeout           int    `xml:"timeout,attr"`
+	PlayBeep          string `xml:"playBeep,attr"`
+	Grammar           int    `xml:"grammar,attr"`
 }
-type ResponseDial struct {
-	XMLName xml.Name `xml:"Response"`
-	Dial    Dial     `xml:"Dial"`
+
+type Gather struct {
+	Say               Say    `xml:"Say"`
+	Play              string `xml:"Play"`
+	PlayLastRecording string `xml:"PlayLastRecording"`
+	Pause             Pause  `xml:"Pause"`
+	Input             string `xml:"input,attr"`
+	Hints             string `xml:"hints,attr"`
+	Language          string `xml:"language,attr"`
+	Action            string `xml:"action,attr"`
+	Method            string `xml:"method,attr"`
+	Timeout           int    `xml:"timeout,attr"`
+	FinishOnKey       string `finishOnKey:"input,attr"`
+	NumDigits         int    `xml:"numDigits,attr"`
 }
-type ResponsePause struct {
-	XMLName xml.Name `xml:"Response"`
-	Pause   Pause    `xml:"Pause"`
+
+type Hangup struct {
+	Schedule string `xml:"schedule,attr"`
+	Reason   string `xml:"reason,attr"`
 }
-type ResponseRedirect struct {
-	XMLName  xml.Name `xml:"Response"`
-	Redirect Redirect `xml:"Redirect"`
+
+type Number struct {
+	SendDigits      string `xml:"sendDigits,attr"`
+	Method          string `xml:"method,attr"`
+	Url             int    `xml:"url,attr"`
+	SendOnPreanswer string `xml:"sendOnPreanswer,attr"`
 }
-type ResponseSay struct {
-	XMLName xml.Name `xml:"Response"`
-	Say     Say      `xml:"Say"`
+
+type User struct {
+	SendDigits string `xml:"sendDigits,attr"`
+	Params     string `xml:"params,attr"`
+}
+
+type Response struct {
+	XMLName            xml.Name           `xml:"Response"`
+	Say                Say                `xml:"Say"`
+	Play               Play               `xml:"Play"`
+	Answer             string             `xml:"Answer"`
+	PlayLastRecording  string             `xml:"PlayLastRecording"`
+	Gather             Gather             `xml:"Gather"`
+	Dial               Dial               `xml:"Dial"`
+	Hangup             Hangup             `xml:"Hangup"`
+	Redirect           Redirect           `xml:"Redirect"`
+	Ping               Ping               `xml:"Ping"`
+	Reject             Reject             `xml:"Reject"`
+	Pause              Pause              `xml:"Pause"`
+	Sms                Sms                `xml:"Sms"`
+	Mms                Mms                `xml:"Mms"`
+	IncomingPhoneNumer IncomingPhoneNumer `xml:"IncomingPhoneNumber"`
+	RestException      RestException      `xml:"RestException"`
 }

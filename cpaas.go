@@ -63,8 +63,10 @@ func PlayFirst(w http.ResponseWriter, r *http.Request) {
 }
 
 func PlaySecond(w http.ResponseWriter, r *http.Request) {
-	inbound := &s.ResponsePlay{
-		Play: "https://teresadapraiamidis.com/Mp3/Musicas/Rock_Internacional/Alok/Hear_Me_Now.mp3",
+	inbound := &s.Response{
+		Play: s.Play{
+			Value: "https://teresadapraiamidis.com/Mp3/Musicas/Rock_Internacional/Alok/Hear_Me_Now.mp3",
+		},
 	}
 	iXML, err := xml.MarshalIndent(inbound, "", "  ")
 	if err != nil {
@@ -77,7 +79,7 @@ func PlaySecond(w http.ResponseWriter, r *http.Request) {
 }
 
 func Dial(w http.ResponseWriter, r *http.Request) {
-	inbound := &s.ResponseDial{
+	inbound := &s.Response{
 		Dial: s.Dial{
 			Value:  "(647) 695-6429",
 			Method: "POST",
@@ -94,7 +96,7 @@ func Dial(w http.ResponseWriter, r *http.Request) {
 }
 
 func Say(w http.ResponseWriter, r *http.Request) {
-	inbound := &s.ResponseSay{
+	inbound := &s.Response{
 		Say: s.Say{
 			Value:    "How are you?",
 			Voice:    "woman",
@@ -114,7 +116,7 @@ func Say(w http.ResponseWriter, r *http.Request) {
 }
 
 func Answer(w http.ResponseWriter, r *http.Request) {
-	inbound := &s.ResponseGather{
+	inbound := &s.Response{
 		Gather: s.Gather{
 			Method:   "POST",
 			Input:    "speech",
@@ -139,7 +141,7 @@ func Answer(w http.ResponseWriter, r *http.Request) {
 }
 
 func DTMF1(w http.ResponseWriter, r *http.Request) {
-	inbound := &s.ResponseGather{
+	inbound := &s.Response{
 		Gather: s.Gather{
 			Method:      "POST",
 			NumDigits:   1,
@@ -163,7 +165,7 @@ func DTMF1(w http.ResponseWriter, r *http.Request) {
 	return
 }
 func DTMF2(w http.ResponseWriter, r *http.Request) {
-	inbound := &s.ResponseGather{
+	inbound := &s.Response{
 		Gather: s.Gather{
 			Method:      "POST",
 			NumDigits:   1,
@@ -187,7 +189,7 @@ func DTMF2(w http.ResponseWriter, r *http.Request) {
 	return
 }
 func DTMF3(w http.ResponseWriter, r *http.Request) {
-	inbound := &s.ResponseGather{
+	inbound := &s.Response{
 		Gather: s.Gather{
 			Method:      "POST",
 			NumDigits:   1,
@@ -216,7 +218,7 @@ func SMS(w http.ResponseWriter, r *http.Request) {
 
 func PlayPauseRedirec(w http.ResponseWriter, r *http.Request) {
 	//2. Using Play, Pause, Redirect to play a file then load new inbound XML to play another file
-	inbound := &s.ResponseGather{
+	inbound := &s.Response{
 		Gather: s.Gather{
 			Method: "POST",
 			Play:   "https://teresadapraiamidis.com/Mp3/Musicas/Rock_Internacional/Alok/Hear_Me_Now.mp3",
