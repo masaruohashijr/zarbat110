@@ -30,16 +30,19 @@ func main() {
 	}
 	r := mux.NewRouter()
 	http.Handle("/", r)
-	addr := ":5000"
+	addr := ":5005"
 
-	r.HandleFunc("/PLAY1", PlayFirst).Methods("GET")
-	r.HandleFunc("/PLAY2", PlaySecond).Methods("GET")
+	r.HandleFunc("/PLAY1", PlayFirst).Methods("POST")
+	r.HandleFunc("/PLAY2", PlaySecond).Methods("POST")
 	r.HandleFunc("/SAY", Say).Methods("GET")
-	r.HandleFunc("/DTMF1", DTMF1).Methods("GET")
-	r.HandleFunc("/DTMF2", DTMF2).Methods("GET")
-	r.HandleFunc("/DTMF3", DTMF3).Methods("GET")
-	r.HandleFunc("/Dial", Dial).Methods("GET")
-	r.HandleFunc("/SMS", SMS).Methods("GET")
+	r.HandleFunc("/GATHER", Gather).Methods("GET")
+	r.HandleFunc("/DTMF", DTMF).Methods("POST")
+	r.HandleFunc("/SPEECH", Speech).Methods("GET")
+	r.HandleFunc("/speechResponse", SpeechResponse).Methods("POST")
+	/*	r.HandleFunc("/DTMF3", DTMF3).Methods("POST")*/
+	// Play Say Gather Speech
+	r.HandleFunc("/Dial", Dial).Methods("POST")
+	r.HandleFunc("/SMS", SMS).Methods("POST")
 	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Println(err)
 		http.ListenAndServe(addr, nil)
@@ -103,7 +106,7 @@ func Say(w http.ResponseWriter, r *http.Request) {
 		Say: s.Say{
 			Value:    "How are you?",
 			Voice:    "woman",
-			Language: "fr-CA",
+			Language: "en-US",
 			Loop:     0,
 		},
 	}
@@ -118,16 +121,19 @@ func Say(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func DTMF1(w http.ResponseWriter, r *http.Request) {
+func Gather(w http.ResponseWriter, r *http.Request) {
 	inbound := &s.ResponseGather{
 		Gather: s.GatherSay{
-			Method:    "POST",
-			NumDigits: 1,
-			Input:     "dtmf",
+			NumDigits:   1,
+			FinishOnKey: "#",
+			Action:      "https://350542707636.ngrok.io/DTMF",
 			Say: s.Say{
-				Value:    "Hello",
+				Value: "For customer service department, press 1." +
+					"For technical support, press 2." +
+					"For the sales department, press 3." +
+					"Press 4 if you want to return to the main menu.",
 				Voice:    "woman",
-				Language: "en-us",
+				Language: "en-US",
 				Loop:     0,
 			},
 		},
@@ -142,16 +148,18 @@ func DTMF1(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func DTMF2(w http.ResponseWriter, r *http.Request) {
+func Speech(w http.ResponseWriter, r *http.Request) {
 	inbound := &s.ResponseGather{
 		Gather: s.GatherSay{
-			Method:    "POST",
-			NumDigits: 1,
-			Input:     "dtmf",
+			NumDigits:   1,
+			FinishOnKey: "#",
+			Hints:       "SERVICE",
+			Input:       "speech",
+			Action:      "https://350542707636.ngrok.io/speechResponse",
 			Say: s.Say{
-				Value:    "How are you?",
+				Value:    "For customer service department, say SERVICE.",
 				Voice:    "woman",
-				Language: "en-us",
+				Language: "en-US",
 				Loop:     0,
 			},
 		},
@@ -165,12 +173,25 @@ func DTMF2(w http.ResponseWriter, r *http.Request) {
 	w.Write(iXML)
 	return
 }
+
+func DTMF(w http.ResponseWriter, r *http.Request) {
+	println("+++++++++++++++++++++++++++++++++++++")
+	w.Header().Set("Content-Type", "application/xml")
+	response := "<Response><Say>We are about to connect you with customer service department. Please wait for a moment.</Say></Response>"
+	w.Write([]byte(response))
+}
+
+func SpeechResponse(w http.ResponseWriter, r *http.Request) {
+	println("+++++++++++++++++++++++++++++++++++++")
+	w.Header().Set("Content-Type", "application/xml")
+	response := "<Response><Say>We are about to connect you with customer service department. Please wait for a moment.</Say></Response>"
+	w.Write([]byte(response))
+}
+
 func DTMF3(w http.ResponseWriter, r *http.Request) {
 	inbound := &s.ResponseGather{
 		Gather: s.GatherSay{
-			Method:    "POST",
 			NumDigits: 1,
-			Input:     "dtmf",
 			Say: s.Say{
 				Value:    "Everything is fine",
 				Voice:    "woman",
@@ -188,11 +209,12 @@ func DTMF3(w http.ResponseWriter, r *http.Request) {
 	w.Write(iXML)
 	return
 }
+
 func SMS(w http.ResponseWriter, r *http.Request) {
 	inbound := &s.ResponseSms{
 		Sms: s.Sms{
 			Value: "Hi, the Sms service is working.",
-			From:  "(647)930-8804",
+			From:  "(647) 930-8804",
 			To:    "(647) 695-6429",
 		},
 	}

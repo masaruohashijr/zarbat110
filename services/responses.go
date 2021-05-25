@@ -157,29 +157,26 @@ type GetSpeech struct {
 
 type GatherSay struct {
 	Say         Say    `xml:"Say"`
+	Action      string `xml:"action,attr"`
+	FinishOnKey string `xml:"finishOnKey,attr"`
 	Input       string `xml:"input,attr"`
 	Hints       string `xml:"hints,attr"`
-	Language    string `xml:"language,attr"`
-	Action      string `xml:"action,attr"`
-	Method      string `xml:"method,attr"`
-	Timeout     int    `xml:"timeout,attr"`
-	FinishOnKey string `xml:"finishOnKey,attr"`
 	NumDigits   int    `xml:"numDigits,attr"`
 }
 
 type Gather struct {
-	Say               Say    `xml:"Say"`
-	Play              string `xml:"Play"`
-	PlayLastRecording string `xml:"PlayLastRecording"`
-	Pause             Pause  `xml:"Pause"`
-	Input             string `xml:"input,attr"`
-	Hints             string `xml:"hints,attr"`
-	Language          string `xml:"language,attr"`
-	Action            string `xml:"action,attr"`
-	Method            string `xml:"method,attr"`
-	Timeout           int    `xml:"timeout,attr"`
-	FinishOnKey       string `xml:"finishOnKey,attr"`
-	NumDigits         int    `xml:"numDigits,attr"`
+	Say               Say    `xml:"Say,omitempty"`
+	Play              string `xml:"Play,omitempty"`
+	PlayLastRecording string `xml:"PlayLastRecording,omitempty"`
+	Pause             Pause  `xml:"Pause,omitempty"`
+	Input             string `xml:"input,attr,omitempty"`
+	Hints             string `xml:"hints,attr,omitempty"`
+	Language          string `xml:"language,attr,omitempty"`
+	Action            string `xml:"action,attr,omitempty"`
+	Method            string `xml:"method,attr,omitempty"`
+	Timeout           int    `xml:"timeout,attr,omitempty"`
+	FinishOnKey       string `xml:"finishOnKey,attr,omitempty"`
+	NumDigits         int    `xml:"numDigits,attr,omitempty"`
 }
 
 type Hangup struct {
