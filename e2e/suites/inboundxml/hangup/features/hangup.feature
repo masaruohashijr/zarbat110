@@ -6,6 +6,9 @@ Feature: hangup
   Scenario: Hangup a call
 
     Given I have my "Account"
-    When I make a call to "999"
-    And after 3 seconds past 
+    And I set "+888" to record the call
+    And I set "+999" to hangup after 3 seconds
+    When I make a call from "+888" to "+999"
+    And 3 seconds has past 
     Then the call should be off
+    And I can see that the recording lasted 3 seconds 

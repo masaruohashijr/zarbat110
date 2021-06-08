@@ -6,8 +6,8 @@ Feature: conference
   Scenario: Make a Conference // WE CAN USE OUTLINE and BACKGROUND HERE
 
     Given I have my "Account" 
-    And I set "+333" to say "What a wonderful world"
-    And I set "+444" to say "The colors of the rainbow"
+    And I set "+333" a "woman" to say "What a wonderful world"
+    And I set "+444" a "woman" to say "The colors of the rainbow"
     When I make a call from "+111" to a "+222" and set as a conference room with size 3
     And  I make a call from "+333" to a "+222" 
     And  I make a call from "+444" to a "+222" 

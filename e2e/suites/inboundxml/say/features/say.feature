@@ -6,6 +6,7 @@ Feature: say
   Scenario: Say something
 
     Given I have my "Account" 
-    And I set "+999" to say "I think to myself"
-    When I make a call to number "+999"
+    And I set "+888" to say "I think to myself"
+    And I set "+999" to gather speech result within 15 seconds
+    When I make a call from "+888" to "+999"
     Then I should listen "I think to myself"

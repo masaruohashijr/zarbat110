@@ -6,13 +6,13 @@ Feature: gather
   Scenario: Gather DTMF
 
     Given I have my "Account"  
-    When I make a call to "+999" 
-    And I input digits "123"
+    And I set "+888" to send digits "123"
+    When I make a call from "+888" to "+999" 
     Then I should be able to see "123" in plain text
 
   Scenario: Gather Speech
 
     Given I have my "Account"  
+    And I set "+888" to say "something"
     When I make a call to "+999" 
-    And I say "something"
     Then I should be able to see "something" in plain text

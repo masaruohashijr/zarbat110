@@ -6,7 +6,7 @@ Feature: pause
   Scenario: Pause a sequence of sentences
 
     Given I have my "Account"
-    When make a call to "+999"
+    When I make a call to "+999"
     And say the sentence "I see trees of green"
     And pause 5 seconds
     And say the sentence "I see skies of blue"
