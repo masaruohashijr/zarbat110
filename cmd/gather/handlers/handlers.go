@@ -18,7 +18,7 @@ func GatherhHandler(w http.ResponseWriter, r *http.Request) {
 			Input:    "speech",
 			Language: "en-US",
 			Timeout:  15,
-			Action:   "https://718badd7aa74.ngrok.io/SpeechResult",
+			Action:   "https://56bf92937769.ngrok.io/SpeechResult",
 		},
 	}
 	iXML, err := xml.MarshalIndent(inbound, "", "")
