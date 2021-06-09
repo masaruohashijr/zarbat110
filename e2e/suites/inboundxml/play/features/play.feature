@@ -5,8 +5,7 @@ Feature: play
 
   Scenario: Play a MP3
 
-    Given I have my "Account"
-    And I set "+999" to play "music.mp3"
-    When I make a call from "+888" to "+999"
-    Then I listen to "music.mp3"
-    And I get "track", "author", "album" and "releaseYear"
+    Given my test setup runs #-> myTestSetupRuns()
+    And "NumberB" configured to play "music.mp3" #-> configuredToPlay(numberB string, music string)
+    When I make a call from "NumberA" to "NumberB" #-> iMakeACallFromTo(numberA string, numberB string)
+    Then "NumberA" should get track name "trackName" #-> shouldGetTrackName(numberA string, trackName string)    

@@ -3,11 +3,10 @@ Feature: dial
   As an end user
   I want to make an outgoing dial from an already made and current call
 
-  Scenario: Make a Transfer
-
-    Given I have my "Account"
-    And I set "+999" to dial to "+888"
-    And I set "+888" a "woman" to say "I see skies of blue"
-    When I make a call to the number "+999"
-    Then this call is transfered to the number "+888"
-    And I get the response "I see skies of blue" in plain text
+Scenario: Dial
+  Given my test setup runs #-> myTestSetupRuns()
+    And "NumberA" configured to say "Hello World" #-> configuredToSay(numberA string, message string)
+    And append to "NumberA" config dial "NumberC" #-> appendToConfigDial(numberA string, numberC string)
+    When I make a call from "NumberB" to "NumberA" #-> iMakeACallFromTo(numberB string, numberA string)
+    Then "NumberC" should get the incoming call from "NumberA" #-> shouldGetTheIncomingCallFrom(numberC string, numberA string)
+    And "NumberA" should get the incoming call from "NumberB" #-> shouldGetTheIncomingCallFrom(numberA string, numberB string)

@@ -6,10 +6,9 @@ Feature: number
 
   Scenario: Call multiple numbers in a sequence
 
-    Given I have my "Account"
-    When I add to sequence "+777"
-    And I add to sequence "+888"
-    And I add to sequence "+999"
-    Then "+777" did not connect
-    And "+888" did not connect
-    And "+999" connects
+    Given my test setup runs #-> myTestSetupRuns()
+    And "NumberB" configured to dial "NumberC" #-> configuredToDial(numberB string, numberC string)
+    And append to "NumberB" config dial "NumberD" #-> appendToConfigDial(numberB string, numberD string)
+    And "NumberC" configured to reject with "not-in-service" reason #-> configuredToRejectWith(numberC string, reason string)
+    When I make a call from "NumberA" to "NumberB" #-> iMakeACallFromTo(numberB string, numberA string)
+    Then "NumberD" should get the incoming call from "NumberA" #-> shouldGetTheIncomingCallFrom(numberA string, numberB string)

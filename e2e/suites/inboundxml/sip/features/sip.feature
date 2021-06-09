@@ -5,10 +5,9 @@ Feature: sip
 
   Scenario: Make a Transfer using SIP
 
-    Given I have my "Account"
-    And I set "+999" to dial to "+888"
-    And my SIP credentials are "SIP address", "username","password"
-    And I set "+888" to say "I see skies of blue"
-    When I make a call to the number "+999"
-    Then this call is transfered to the number "+888"
-    And I get the response "I see skies of blue" in plain text
+    Given my test setup runs #-> myTestSetupRuns()
+      And "NumberB" configured to dial "NumberC" #-> configuredToSay(numberA string, message string)
+      And my SIP credentials are "SIP address", "username","password" #-> mySipCredentialsAre(sipAddress string, username string, password string)
+      And "NumberC" configured to say "I see skies of blue" #-> configuredToSay(numberA string, message string)
+      When I make a call from "NumberA" to "NumbeB" #-> iMakeACallFromTo(numberA string, numberB string)
+      Then "NumberB" should get speech "I see skies of blue" #-> shouldGetSpeech(numberA string, speech string)

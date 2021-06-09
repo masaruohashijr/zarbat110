@@ -5,10 +5,7 @@ Feature: hangup
 
   Scenario: Hangup a call
 
-    Given I have my "Account"
-    And I set "+888" to record the call
-    And I set "+999" to hangup after 3 seconds
-    When I make a call from "+888" to "+999"
-    And 3 seconds has past 
-    Then the call should be off
-    And I can see that the recording lasted 3 seconds 
+    Given my test setup runs #-> myTestSetupRuns()
+      And "NumberB" configured to hangup after 3 seconds #-> configuredToHangupAfterSeconds(numberB string, seconds int)
+      When I make a call from "NumberA" to "NumberB" #-> iMakeACallFromTo(numberA string, numberB string)
+      Then "NumberA" should get last call duration equals to 3 #-> shouldGetLastCallDurationEqualsTo(numberA string, timeInSeconds int)

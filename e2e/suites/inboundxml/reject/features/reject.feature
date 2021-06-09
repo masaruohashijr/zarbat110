@@ -5,9 +5,9 @@ Feature: reject
 
   Scenario: Pause a sequence of sentences
 
-    Given I have my "Account"
-    And I set "+888" to dial to "+999"
-    And gather speech within 5 seconds
-    And I set "+999" to reject calls with "not-in-service" reason
-    When I try to make a call from "+888" to "+999"    
-    Then I get a "not-in-service" reason in plain text
+    Given my test setup runs #-> myTestSetupRuns()
+      And "NumberB" configured to dial to "NumberC" #-> configuredToDialTo(numberB string, numberA string)
+      And "NumberB" configured to gather speech #-> configuredToGatherSpeech(numberB string, text string)
+      And "NumberC" configured to reject with "not-in-service" reason #-> configuredToRejectWithReason(numberC string, reason string)
+      When I make a call from "NumberA" to "NumbeB" #-> iMakeACallFromTo(numberA string, numberB string)
+      Then "NumberB" should get speech "not-in-service" #-> shouldGetSpeech(numberA string, speech string)

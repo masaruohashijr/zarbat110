@@ -6,9 +6,7 @@ Feature: mms
 
   Scenario: Send an MMS
 
-    Given I have my "Account"
-    When I set an MMS message with "test.jpg" and "And I think to myself"
-    And I send the message from "+888" to "+999" 
-    Then the "+999" should receive an MMS 
-    And message contains media "test.jpg" 
-    And message contains text "And I think to myself"
+    Given my test setup runs #-> myTestSetupRuns()
+      And created MMS with text "I think to myself" and media "test.jpg" #-> createdMmsWithTextAndMedia(numberB string, seconds int)
+      When I send MMS from "NumberA" to "NumberB" #-> iSendMmsFromTo(numberA string, numberB string)
+      Then "NumberB" should get MMS with text "I think to myself" and media "test.jpg" #-> shouldGetMmsWithTextAndMedia(numberA string, text string, media string)

@@ -5,8 +5,8 @@ Feature: say
 
   Scenario: Say something
 
-    Given I have my "Account" 
-    And I set "+888" to say "I think to myself"
-    And I set "+999" to gather speech result within 15 seconds
-    When I make a call from "+888" to "+999"
-    Then I should listen "I think to myself"
+    Given my test setup runs #-> myTestSetupRuns()
+      And "NumberB" configured to say "I think to myself" #-> configuredToSay(numberA string, message string)
+      And "NumberA" configured to gather speech #-> configuredToGatherSpeech(numberB string)
+      When I make a call from "NumberA" to "NumbeB" #-> iMakeACallFromTo(numberA string, numberB string)
+      Then "NumberA" should get speech "I think to myself" #-> shouldGetSpeech(numberA string, speech string)    

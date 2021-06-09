@@ -5,7 +5,8 @@ Feature: ping
 
   Scenario: Ping an URL
 
-    Given I have my "Account"
-    And I set "+999" to ping "http://webhook"
-    When I make a call from "+888" to "+999"
-    Then I get voice request parameters
+    Given my test setup runs #-> myTestSetupRuns()
+    And "NumberB" configured to ping "webhook" #-> configuredToPing(numberB string, webhook string)
+    When I make a call from "NumberA" to "NumberB" #-> iMakeACallFromTo(numberA string, numberB string)
+    Then "webhook" should get request method "GET" #-> shouldGetRequestMethod(webhook string, method string)
+
