@@ -11,13 +11,13 @@ const Header = `<?xml version="1.0"?>` + "\n"
 func SaySomethingHandler(w http.ResponseWriter, r *http.Request) {
 	inbound := &say.ResponseSay{
 		Pause: say.Pause{
-			Length: 3,
+			Length: 5,
 		},
 		Say: say.Say{
-			Value:    "what we do in life echoes in eternity.",
-			Voice:    "man",
+			Value:    "How are you today",
+			Voice:    "woman",
 			Language: "en-US",
-			Loop:     2,
+			Loop:     3,
 		},
 	}
 	iXML, err := xml.MarshalIndent(inbound, "", "")

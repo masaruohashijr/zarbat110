@@ -15,7 +15,7 @@ func main() {
 	r.HandleFunc("/SaySomething", say.SaySomethingHandler).Methods("POST")
 	r.HandleFunc("/Gather", handlers.GatherhHandler).Methods("POST")
 	r.HandleFunc("/SpeechResult", handlers.SpeechResultHandler).Methods("POST", "GET")
-	r.HandleFunc("/Ola", OlaMundo).Methods("GET")
+	//r.HandleFunc("/Ola", OlaMundo).Methods("GET")
 	http.Handle("/", r)
 	http.ListenAndServe(":5000", nil)
 }
